@@ -1,2 +1,5 @@
-# Asterisk
-Application to Find all Possible Theoretical Ancestors of a Word Given Sound Changes
+## About
+Asterisk is an application made to find the theoretical ancestors of a word given sound changes. This functions in the opposite way as sound change appliers such as Lexurgy SC or SCA². Instead of starting with a proto-word and applying sound changes to find the modern form, it undoes sound changes from modern words and outputs proto-words. However, sound changes are not always clearly reversible. Some can cause two or more consonants to merge, and some can add or delete sounds in specific environments. Consequently, for any given modern word, Asterisk outputs all possible proto-words that could have resulted in the modern word, given certain sound changes.
+
+## How to Use
+[This spreadsheet](https://docs.google.com/spreadsheets/d/1D1URGiIDdTRbQQdP6Xrd8tCZfjpi5gLHicEDASNNd6M/edit?usp=sharing) is the current interface for this project. The sheet itself contains specific instructions on how to use Asterisk. If you want to simply test out words with the current sound changes, you can type in words that use the consonants and vowels specified in the top left corner and see what proto-words come out. Once you type your word in one of the designated cells, its proto forms should almost instantaneously appear in the cells below.
