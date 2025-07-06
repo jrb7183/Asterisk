@@ -1,6 +1,3 @@
-// += WORKS (IN SOME PLACES) IF YOU WANT TO CLEAN UP THE CODE
-// FINSIH ADDING map()/filter()/reduce() FUNCTIONS TO REDUCE THE AMOUNT OF RECURSION
-
 // Returns all possible word forms that could have evolved into the input word given soundChanges
 function unSoundChange(soundChanges = [""], wordList = [""], groupDict = {}, bool = true) {
   let posWords = [];
@@ -15,15 +12,17 @@ function unSoundChange(soundChanges = [""], wordList = [""], groupDict = {}, boo
     } else {
       currSoundsStr = soundChange.slice(arrowPos + 1, dashPos);
     }
-    let currSounds = groupExpander(currSoundsStr, groupDict);
-    
-    if (includesInList(word, currSounds) && currSounds.length > 0) {
-      let currSoundsInfo = {};
-      currSoundsInfo = findCurrSounds(word, currSounds, 0);
-      let environment = "";
-      if (dashPos == -1) {
-        environment = "_";
-      } else {
+
+    let currSounds = groupExpander(currSoundsStr, groupDict); 
+    let currSoundsInfo = findCurrSounds(word, currSounds);
+    if (!(Object.keys(currSoundsInfo).length) && currSounds[0] == "") {
+      currSoundsInfo["0"] = "";
+    }
+
+    if (Object.keys(currSoundsInfo).length) {
+      
+      let environment = "_";
+      if (dashPos != -1) {
         environment = soundChange.slice(dashPos + 1);
       }
       currSounds = Object.values(currSoundsInfo);
