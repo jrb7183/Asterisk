@@ -25,6 +25,7 @@ function unSoundChange(soundChanges = [""], wordList = [""], groupDict = {}, boo
       if (dashPos != -1) {
         environment = soundChange.slice(dashPos + 1);
       }
+
       currSounds = Object.values(currSoundsInfo);
       if (currSounds[0] != "") {
         environment = splice([environment], environment.indexOf("_"),1, currSounds);
@@ -32,14 +33,14 @@ function unSoundChange(soundChanges = [""], wordList = [""], groupDict = {}, boo
         environment = [environment];
       }
 
-      let environments = environment.map(function(x) {return groupExpander(x, groupDict)});
-      environments = environments.reduce(function(x, y) {return x.concat(y)});
-      
-      environments = environments.filter(function(x) {return includesInList(word, [x])});
+      let environments = []
+      environment.forEach((variant) => environments = environments.concat(groupExpander(variant, groupDict)));
+      environments = environments.filter((environment) => {return includesInList(word, [environment])});
+
       if (environments.length != 0) {
         currSoundsInfo = whichSoundInEnv(word, currSoundsInfo, environments);
         
-        if (Object.keys(currSoundsInfo).length != 0) {
+        if (Object.keys(currSoundsInfo).length) {
           let prevSounds = groupExpander(soundChange.slice(0, arrowPos), groupDict);
           posWords = posWordGen([word], Object.entries(currSoundsInfo), prevSounds);
         }
