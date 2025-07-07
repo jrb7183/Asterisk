@@ -13,7 +13,7 @@ function unSoundChange(soundChanges = [""], wordList = [""], groupDict = {}, boo
       currSoundsStr = soundChange.slice(arrowPos + 1, dashPos);
     }
 
-    let currSounds = groupExpander(currSoundsStr, groupDict); 
+    let currSounds = groupExpander(currSoundsStr, groupDict);
     let currSoundsInfo = findCurrSounds(word, currSounds);
     if (!(Object.keys(currSoundsInfo).length) && currSounds[0] == "") {
       currSoundsInfo["0"] = "";
@@ -26,24 +26,28 @@ function unSoundChange(soundChanges = [""], wordList = [""], groupDict = {}, boo
         environment = soundChange.slice(dashPos + 1);
       }
 
+      const underPos = environment.indexOf("_")
       currSounds = Object.values(currSoundsInfo);
+
       if (currSounds[0] != "") {
-        environment = splice([environment], environment.indexOf("_"),1, currSounds);
+        environment = splice([environment], underPos, 1, currSounds);
       } else {
         environment = [environment];
       }
 
       let environments = []
       environment.forEach((variant) => environments = environments.concat(groupExpander(variant, groupDict)));
+
+      // Filter out duplicates and environments not found in word
+      environments = [...new Set(environments)]
       environments = environments.filter((environment) => {return includesInList(word, [environment])});
 
       if (environments.length != 0) {
-        currSoundsInfo = whichSoundInEnv(word, currSoundsInfo, environments);
+        currSoundsInfo = whichSoundInEnv(word, currSoundsInfo, environments, underPos);
         
         if (Object.keys(currSoundsInfo).length) {
           let prevSounds = groupExpander(soundChange.slice(0, arrowPos), groupDict);
           posWords = posWordGen([word], Object.entries(currSoundsInfo), prevSounds);
-          bool = true
         }
       }
     }
@@ -59,7 +63,9 @@ function unSoundChange(soundChanges = [""], wordList = [""], groupDict = {}, boo
 
   // On recursive calls where the length of soundChanges is 1 and wordList > 1, the function is called recursively again for the number of times equal to the length of wordList  
   if (soundChanges.length == 1) {
-    posWords = wordList.map((x) => unSoundChange(soundChanges, [x], groupDict, false)[0]);
+    wordList.forEach((word) => 
+      posWords = posWords.concat(unSoundChange(soundChanges, [word], groupDict, false))
+    );    
     return posWords;
   }
 
