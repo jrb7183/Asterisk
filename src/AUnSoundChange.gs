@@ -75,10 +75,10 @@ function unSoundChange(soundChanges = [""], wordList = [""], groupDict = {}, boo
   posWords = falseRemover(posWords);
 
   if (posWords.length == 0 || (posWords.length == 1 && posWords[0] == wordList[0]))  {
-    return filterDuplicates(wordList);
+    return [...new Set(wordList)];
   }
   if (bool){
-    return filterDuplicates(wordList.concat(posWords));
+    return [...new Set(wordList.concat(posWords))];
   }
-  return filterDuplicates(posWords);
+  return [...new Set(posWords)];
 }
