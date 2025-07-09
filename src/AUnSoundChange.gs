@@ -47,7 +47,7 @@ function unSoundChange(soundChanges = [""], wordList = [""], groupDict = {}, boo
         
         if (Object.keys(currSoundsInfo).length) {
           let prevSounds = groupExpander(soundChange.slice(0, arrowPos), groupDict);
-          posWords = posWordGen([word], Object.entries(currSoundsInfo), prevSounds);
+          posWords = posWordGen(word, Object.entries(currSoundsInfo), prevSounds);
         }
       }
     }
