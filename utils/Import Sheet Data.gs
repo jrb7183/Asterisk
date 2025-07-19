@@ -2,7 +2,7 @@
 function sheetMediator(inputWord, groups, soundChanges) {
   if (inputWord != "") {
     if (soundChanges[0] != "=") {
-      return unSoundChange(listSCs(soundChanges), [inputWord], groupDictCreator(groups));
+      return unSoundChange(cleanSCs(soundChanges), [inputWord], groupDictCreator(groups));
     }
   }
 }

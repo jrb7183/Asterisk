@@ -38,27 +38,28 @@ const deSquiggle = (soundChange) => {
     [currSounds, preCurrSquiggle, postCurrSquiggle] = outSquiggleFinder(currSounds, preCurrSquiggle, postCurrSquiggle);
     [prevSounds, currSounds] = [prevSounds.split(","), currSounds.split(",")];
 
-    const newSCs = prevSounds.map((x, i) => prePrevSquiggle + x + postPrevSquiggle + ">" + preCurrSquiggle + currSounds[i] + postCurrSquiggle + env);
+    const newSCs = prevSounds.map((x, i) => prePrevSquiggle + x + postPrevSquiggle + ">" + preCurrSquiggle + (i >= currSounds.length ? "" : currSounds[i]) + postCurrSquiggle + env);
     return newSCs;
   }
   return [soundChange];
-} 
-
-// Adjusts sound changes to work with unSoundChange()
-function cleanSCs(soundChanges = [""]) {
-  cleanedSCs = []
-
-  soundChanges.forEach(soundChange => {
-    cleanedSCs = cleanedSCs.concat(deSquiggle(soundChange));
-  });
-
-  return cleanedSCs;
 }
 
 // Puts sound changes in input into a list
-function listSCs(input = "") {
-  input = input.split("=");
-  input = input.filter((x) => x != false);
-  input = input.map((x) => x.split(" ").join(""));
-  return cleanSCs(input);
+function cleanSCs(soundChanges = "") {
+  cleanedSCs = []
+  soundChanges = soundChanges.split("=");
+
+  soundChanges.forEach(soundChange => {
+    soundChange = soundChange.split(" ").join("");
+    if (soundChange) {
+
+      if (soundChange.indexOf("{") != -1) {
+        cleanedSCs = cleanedSCs.concat(deSquiggle(soundChange));
+      } else {
+        cleanedSCs = cleanedSCs.concat([soundChange]);
+      }
+    }
+  });
+
+  return cleanedSCs;
 }
