@@ -5,7 +5,7 @@ function posWordGen(word = "", currSoundInfo = [[]], prevSounds = [""]) {
 
   currSoundInfo.forEach( currSound => {
     posWords = posWords.concat(splice(posWords, parseInt(currSound[0]), currSound[1]?.length || 0, prevSounds));
-  })
+  });
   
   return posWords;
 }

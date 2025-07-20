@@ -25,8 +25,8 @@ const deSquiggle = (soundChange) => {
     let currSounds = soundChange.slice(arrowPos + 1, dashPos);
     let env = "/" + soundChange.slice(dashPos + 1);
     if (dashPos == -1) {
-      currSounds = currSounds.concat("}")
-      env = ""
+      currSounds = currSounds.concat("}");
+      env = "";
     }
     
     let prePrevSquiggle = "";
