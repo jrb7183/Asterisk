@@ -1,8 +1,6 @@
 // Returns all possible word forms that could have evolved into the input word given soundChanges
 function unSoundChange(soundChanges = [""], wordList = [""], groupDict = {}, bool = true) {
   let allPosWords = [];
-  // Removes false values from a list
-  const falseRemover = (list) => list.filter((x) => x != false);
 
   // On recursive calls where the length of soundChanges is 1 and wordList > 1, the function is called recursively again for the number of times equal to the length of wordList  
   if (soundChanges.length == 1) {
@@ -66,10 +64,10 @@ function unSoundChange(soundChanges = [""], wordList = [""], groupDict = {}, boo
   }
 
   allPosWords = unSoundChange([soundChanges[0]], wordList, groupDict, false);
-  allPosWords = allPosWords.concat(unSoundChange(soundChanges.slice(1), allPosWords.concat(wordList), groupDict, false));
+  allPosWords = allPosWords.concat(unSoundChange(soundChanges.slice(1), [...new Set(allPosWords.concat(wordList))], groupDict, false));
 
   if (allPosWords.length == 0 || (allPosWords.length == 1 && allPosWords[0] == wordList[0]))  {
-    return [...new Set(wordList)];
+    return wordList;
   }
   if (bool){
     return [...new Set(wordList.concat(allPosWords))];
